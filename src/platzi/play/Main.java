@@ -2,7 +2,6 @@ package platzi.play;
 
 import platzi.play.contenido.Pelicula;
 import platzi.play.plataforma.Plataforma;
-import platzi.play.plataforma.Usuario;
 import platzi.play.util.ScannerUtils;
 
 public class Main {
@@ -43,16 +42,24 @@ public class Main {
                 case MOSTRAR_TODO -> plataforma.mostrarTitulos();
                 case BUSCAR_POR_TITULO -> {
                     String nombreBuscado = ScannerUtils.capturarTexto("Nombre del contenido a buscar");
-                    Pelicula pelicula = plataforma.buscarPorTitulo(nombreBuscado);
+                    Pelicula contenido = plataforma.buscarPorTitulo(nombreBuscado);
 
-                    if (pelicula != null) {
-                        System.out.println(pelicula.obtenerFichaTecnica());
+                    if (contenido != null) {
+                        System.out.println(contenido.obtenerFichaTecnica());
                     } else {
                         System.out.println(nombreBuscado + " no existe dentro de " + plataforma.getNombre());
                     }
                 }
                 case ELIMINAR -> {
+                    String nombreAEliminar = ScannerUtils.capturarTexto("Nombre del contenido a eliminar");
+                    Pelicula contenido = plataforma.buscarPorTitulo(nombreAEliminar);
 
+                    if (contenido != null) {
+                        plataforma.eliminar(contenido);
+                        System.out.println(nombreAEliminar + " eliminado! ❌");
+                    } else {
+                        System.out.println(nombreAEliminar + " no existe dentro de " + plataforma.getNombre());
+                    }
                 }
                 case SALIR -> System.exit(0);
             }
